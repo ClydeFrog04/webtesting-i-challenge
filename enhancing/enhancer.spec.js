@@ -11,14 +11,25 @@ describe("Repairs item", () => {
 
 describe("Enhances item", function () {
     // on success enhancement increases by one limiting at 20
-    //on fail enhancement as e < 15 e-= 5 || e===15 e===16 e-=10 || e-=1\
-    let item = {enhancement: 10, durability: 100};
-    beforeAll(() =>{
-        item = {enhancement: 10, durability: 100};
-    });
+    //on fail enhancement as e < 15 durability as d-=5 || e===15 e===16 d-=10 || d-=1
     it("Should succeed in enhancement setting enhancement to 11", () =>{
+        const item = {enhancement: 10, durability: 100};
         const newItem = enhancer.success(item);
         expect(newItem.enhancement).toBe(11);
     });
-
+    it("Should fail in enhancement setting durability to 95", () =>{
+        const item = {enhancement: 10, durability: 100};
+        const newItem = enhancer.fail(item);
+        expect(newItem.durability).toBe(95);
+    });
+    it("Should fail in enhancement setting durability to 90", () =>{
+        const item = {enhancement: 15, durability: 100};
+        const newItem = enhancer.fail(item);
+        expect(newItem.durability).toBe(90);
+    });
+    it("Should fail in enhancement setting durability to 99", () =>{
+        const item = {enhancement: 20, durability: 100};
+        const newItem = enhancer.fail(item);
+        expect(newItem.durability).toBe(99);
+    });
 });
